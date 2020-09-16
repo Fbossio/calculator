@@ -14,32 +14,30 @@ class Calculator extends Component {
   };
 
   handleInput = (e) => {
-    if (e.value !== "=") {
-      if (this.state.currentNumber !== "0") {
-        this.setState({
-          currentNumber: this.state.currentNumber + e.value,
-          operatorFlag: false,
-        });
-      } else {
-        let currentNumber = "" + e.value;
-        this.setState({ currentNumber, operatorFlag: false });
-      }
+    if (this.state.currentNumber !== "0") {
+      this.setState({
+        currentNumber: this.state.currentNumber + e.value,
+        operatorFlag: false,
+      });
+    } else {
+      let currentNumber = "" + e.value;
+      this.setState({ currentNumber, operatorFlag: false });
     }
+  };
 
-    if (e.value === "=") {
-      try {
-        this.setState({
-          currentNumber: String(math.evaluate(this.state.currentNumber)),
-          decimalFlag: false,
-          operatorFlag: false,
-        });
-      } catch (error) {
-        this.setState({
-          currentNumber: "0",
-          decimalFlag: false,
-          operatorFlag: false,
-        });
-      }
+  handleReturn = () => {
+    try {
+      this.setState({
+        currentNumber: String(math.evaluate(this.state.currentNumber)),
+        decimalFlag: false,
+        operatorFlag: false,
+      });
+    } catch (error) {
+      this.setState({
+        currentNumber: "0",
+        decimalFlag: false,
+        operatorFlag: false,
+      });
     }
   };
 
@@ -124,7 +122,7 @@ class Calculator extends Component {
             onInput={() => this.handleDecimal({ value: "." })}
           />
           <Button value="0" onInput={() => this.handleZero({ value: 0 })} />
-          <Button value="=" onInput={() => this.handleInput({ value: "=" })} />
+          <Button value="=" onInput={() => this.handleReturn({ value: "=" })} />
           <Button
             value="/"
             onInput={() => this.handleOperator({ value: "/" })}
