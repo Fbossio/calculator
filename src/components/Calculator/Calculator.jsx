@@ -29,7 +29,7 @@ class Calculator extends Component {
     if (e.value === "=") {
       try {
         this.setState({
-          currentNumber: math.evaluate(this.state.currentNumber),
+          currentNumber: String(math.evaluate(this.state.currentNumber)),
           decimalFlag: false,
           operatorFlag: false,
         });
