@@ -10,15 +10,19 @@ class Calculator extends Component {
   state = {
     currentNumber: "0",
     decimalFlag: false,
+    operatorFlag: false,
   };
 
   handleInput = (e) => {
     if (e.value !== "=") {
       if (this.state.currentNumber !== "0") {
-        this.setState({ currentNumber: this.state.currentNumber + e.value });
+        this.setState({
+          currentNumber: this.state.currentNumber + e.value,
+          operatorFlag: false,
+        });
       } else {
         let currentNumber = "" + e.value;
-        this.setState({ currentNumber });
+        this.setState({ currentNumber, operatorFlag: false });
       }
     }
 
@@ -27,9 +31,14 @@ class Calculator extends Component {
         this.setState({
           currentNumber: math.evaluate(this.state.currentNumber),
           decimalFlag: false,
+          operatorFlag: false,
         });
       } catch (error) {
-        this.setState({ currentNumber: "0" });
+        this.setState({
+          currentNumber: "0",
+          decimalFlag: false,
+          operatorFlag: false,
+        });
       }
     }
   };
@@ -41,7 +50,7 @@ class Calculator extends Component {
     }
   };
 
-  handleDot = (e) => {
+  handleDecimal = (e) => {
     if (!this.state.decimalFlag) {
       this.setState({
         currentNumber: this.state.currentNumber + e.value,
@@ -51,36 +60,30 @@ class Calculator extends Component {
   };
 
   handleOperator = (e) => {
-    /*
-    let index = this.state.currentNumber.length - 1;
-    if (
-      isNaN(this.state.currentNumber[index]) &&
-      this.state.currentNumber[index] !== "." &&
-      this.state.currentNumber[index] !== "="
-    ) {
-      let lastOper = this.state.currentNumber[index];
-      this.setState({ currentNumber: this.state.currentNumber + lastOper });
-    }*/
-
-    this.setState({
-      currentNumber: this.state.currentNumber + e.value,
-      decimalFlag: false,
-    });
+    const { currentNumber } = this.state;
+    if (!this.state.operatorFlag) {
+      this.setState({
+        currentNumber: currentNumber + e.value,
+        decimalFlag: false,
+        operatorFlag: true,
+      });
+    } else {
+      let newNumber = currentNumber.slice(0, currentNumber.length - 1);
+      this.setState({
+        currentNumber: newNumber + e.value,
+        decimalFlag: false,
+        operatorFlag: true,
+      });
+    }
   };
 
   handleClear = () => {
     this.setState({
       currentNumber: "0",
       decimalFlag: false,
+      operatorFlag: false,
     });
   };
-
-  /*displayValues = () => {
-    if (this.state.currentNumber.length > 1) {
-      return this.state.currentNumber.match(/[^0]/g).join("");
-    }
-    return this.state.currentNumber;
-  };*/
 
   render() {
     return (
@@ -116,7 +119,10 @@ class Calculator extends Component {
           />
         </div>
         <div className={classes.row}>
-          <Button value="." onInput={() => this.handleDot({ value: "." })} />
+          <Button
+            value="."
+            onInput={() => this.handleDecimal({ value: "." })}
+          />
           <Button value="0" onInput={() => this.handleZero({ value: 0 })} />
           <Button value="=" onInput={() => this.handleInput({ value: "=" })} />
           <Button
