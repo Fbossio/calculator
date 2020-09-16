@@ -1,0 +1,14 @@
+.display {
+  height: 3rem;
+  width: 90%;
+  border-radius: 0.4rem;
+  border: 1px solid blue;
+  background-color: white;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+}
+
+.numbers {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,0 +1,13 @@
+.btn {
+  height: 2.5rem;
+  width: 5.5rem;
+  border-radius: 0.4rem;
+  border: none;
+  background-color: rgb(241, 243, 244);
+  cursor: pointer;
+}
+
+.oper {
+  background-color: rgb(49, 49, 233);
+  color: #eee;
+}

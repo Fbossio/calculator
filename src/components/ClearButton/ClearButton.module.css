@@ -1,0 +1,8 @@
+.clear {
+  height: 2.5rem;
+  width: 94%;
+  border-radius: 0.4rem;
+  border: none;
+  background-color: rgb(174, 178, 180);
+  cursor: pointer;
+}
