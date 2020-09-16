@@ -11,14 +11,24 @@ class Calculator extends Component {
     currentNumber: "0",
     decimalFlag: false,
     operatorFlag: false,
+    returned: false,
   };
 
   handleInput = (e) => {
     if (this.state.currentNumber !== "0") {
-      this.setState({
-        currentNumber: this.state.currentNumber + e.value,
-        operatorFlag: false,
-      });
+      if (!this.state.returned) {
+        this.setState({
+          currentNumber: this.state.currentNumber + e.value,
+          operatorFlag: false,
+          returned: false,
+        });
+      } else if (this.state.returned) {
+        this.setState({
+          currentNumber: "" + e.value,
+          operatorFlag: false,
+          returned: false,
+        });
+      }
     } else {
       let currentNumber = "" + e.value;
       this.setState({ currentNumber, operatorFlag: false });
@@ -31,12 +41,14 @@ class Calculator extends Component {
         currentNumber: String(math.evaluate(this.state.currentNumber)),
         decimalFlag: false,
         operatorFlag: false,
+        returned: true,
       });
     } catch (error) {
       this.setState({
         currentNumber: "0",
         decimalFlag: false,
         operatorFlag: false,
+        returned: false,
       });
     }
   };
@@ -50,10 +62,19 @@ class Calculator extends Component {
 
   handleDecimal = (e) => {
     if (!this.state.decimalFlag) {
-      this.setState({
-        currentNumber: this.state.currentNumber + e.value,
-        decimalFlag: true,
-      });
+      if (!this.state.returned) {
+        this.setState({
+          currentNumber: this.state.currentNumber + e.value,
+          decimalFlag: true,
+          returned: false,
+        });
+      } else {
+        this.setState({
+          currentNumber: "" + e.value,
+          decimalFlag: true,
+          returned: false,
+        });
+      }
     }
   };
 
@@ -64,6 +85,7 @@ class Calculator extends Component {
         currentNumber: currentNumber + e.value,
         decimalFlag: false,
         operatorFlag: true,
+        returned: false,
       });
     } else {
       let newNumber = currentNumber.slice(0, currentNumber.length - 1);
@@ -71,6 +93,7 @@ class Calculator extends Component {
         currentNumber: newNumber + e.value,
         decimalFlag: false,
         operatorFlag: true,
+        returned: false,
       });
     }
   };
@@ -80,6 +103,7 @@ class Calculator extends Component {
       currentNumber: "0",
       decimalFlag: false,
       operatorFlag: false,
+      returned: false,
     });
   };
 
