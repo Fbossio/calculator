@@ -9,6 +9,7 @@ import classes from "./Calculator.module.css";
 class Calculator extends Component {
   state = {
     currentNumber: "0",
+    decimalFlag: false,
   };
 
   handleInput = (e) => {
@@ -25,6 +26,7 @@ class Calculator extends Component {
       try {
         this.setState({
           currentNumber: math.evaluate(this.state.currentNumber),
+          decimalFlag: false,
         });
       } catch (error) {
         this.setState({ currentNumber: "0" });
@@ -40,8 +42,11 @@ class Calculator extends Component {
   };
 
   handleDot = (e) => {
-    if (!/\./.test(this.state.currentNumber)) {
-      this.setState({ currentNumber: this.state.currentNumber + e.value });
+    if (!this.state.decimalFlag) {
+      this.setState({
+        currentNumber: this.state.currentNumber + e.value,
+        decimalFlag: true,
+      });
     }
   };
 
@@ -57,12 +62,16 @@ class Calculator extends Component {
       this.setState({ currentNumber: this.state.currentNumber + lastOper });
     }*/
 
-    this.setState({ currentNumber: this.state.currentNumber + e.value });
+    this.setState({
+      currentNumber: this.state.currentNumber + e.value,
+      decimalFlag: false,
+    });
   };
 
   handleClear = () => {
     this.setState({
       currentNumber: "0",
+      decimalFlag: false,
     });
   };
 
