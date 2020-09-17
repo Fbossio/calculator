@@ -1,15 +1,31 @@
 .container {
-  width: 32%;
-  height: 22rem;
+  width: 40vw;
+  height: 65vh;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  margin-top: 10vh;
 }
 
 .row {
   display: flex;
   justify-content: space-evenly;
+  height: 12%;
+}
+
+.rowContainer {
+  display: flex;
+  justify-content: space-evenly;
+  height: 18%;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    width: 98vw;
+    height: 98vh;
+    margin-top: 0vh;
+  }
 }

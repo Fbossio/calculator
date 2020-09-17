@@ -54,9 +54,24 @@ class Calculator extends Component {
   };
 
   handleZero = (e) => {
-    let pattern = /^0/;
-    if (!pattern.test(this.state.currentNumber)) {
-      this.setState({ currentNumber: this.state.currentNumber + e.value });
+    //let pattern = /^0/;
+    if (
+      /*!pattern.test(this.state.currentNumber)*/ this.state.currentNumber !==
+      "0"
+    ) {
+      if (!this.state.returned) {
+        this.setState({
+          currentNumber: this.state.currentNumber + e.value,
+          operatorFlag: false,
+          returned: false,
+        });
+      } else if (this.state.returned) {
+        this.setState({
+          currentNumber: "" + e.value,
+          operatorFlag: false,
+          returned: false,
+        });
+      }
     }
   };
 
@@ -110,7 +125,7 @@ class Calculator extends Component {
   render() {
     return (
       <div className={classes.container}>
-        <div className={classes.row}>
+        <div className={classes.rowContainer}>
           <Display value={this.state.currentNumber} />
         </div>
         <div className={classes.row}>
